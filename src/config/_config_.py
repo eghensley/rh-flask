@@ -6,4 +6,4 @@ Created on Sun Mar 29 20:12:19 2020
 @author: ehens86
 """
 
-CONFIG_PATH = "/home/ehens86/stock-config/flask/py-config.yml"
+CONFIG_PATH = "/home/ehens86/ms-config/stock-config/flask/py-config.yml"

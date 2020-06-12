@@ -27,4 +27,4 @@ def get_tasks(symbol):
 if __name__ == '__main__':
     rh = robin_stock_client()
     rh.login()
-    app.run(debug=True, port = CONFIG['flask']['PORT'])
+    app.run(debug=True, port = CONFIG['flask']['PORT'], host='0.0.0.0')
