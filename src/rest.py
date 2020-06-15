@@ -19,10 +19,16 @@ def hello():
     return "Hello World!"
 
 @app.route('/rh/api/v0/price/instrument/<symbol>', methods=['GET'])
-def get_tasks(symbol):
-    resp = rh.get_historicals(symbol)
+def get_intraday_historicals(symbol):
+#    symbol = 'IBM'
+    
+    resp = rh.get_intra_day_historicals(symbol)
     return Response(json.dumps(resp), status=201, mimetype='application/json')
 
+@app.route('/rh/api/v0/price/instrument/<symbol>/inday', methods=['GET'])
+def get_innerday_historicals(symbol):
+    resp = rh.get_inner_day_historicals(symbol)
+    return Response(json.dumps(resp), status=201, mimetype='application/json')
 
 if __name__ == '__main__':
     rh = robin_stock_client()

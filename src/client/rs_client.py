@@ -350,7 +350,7 @@ class robin_stock_client:
         '''
         self.SESSION.headers['Authorization'] = None
         
-    def get_historicals(self, sym):
+    def get_intra_day_historicals(self, sym):
         resp = init_response()
         try:
             symbols = inputs_to_set(sym)
@@ -371,7 +371,29 @@ class robin_stock_client:
             resp['status'] = 500
             resp['errorMsg'] = 'An exception occurred: {}'.format(e)
             return resp
-        
+
+    def get_inner_day_historicals(self, sym):
+        resp = init_response()
+        try:
+            symbols = inputs_to_set(sym)
+            url = urls.historicals()
+            payload = { 'symbols' : ','.join(symbols),
+                        'interval' : '5minute',
+                        'span' : 'week',
+                        'bounds' : 'regular'}
+            data = self._request_get(url,'results',payload)
+            if data is not None and len(data) > 0 and data[0] is not None and 'historicals' in data[0].keys() and data[0]['historicals'] is not None:
+                resp['payload'] = data[0]['historicals']
+            else:
+                resp['payload'] = []
+                resp['errorMsg'] = 'No Data Found'
+            resp['status'] = 200
+            return resp
+        except Exception as e:
+            resp['status'] = 500
+            resp['errorMsg'] = 'An exception occurred: {}'.format(e)
+            return resp
+                
 #
 #    def get_id(self,symbol):
 #        '''
